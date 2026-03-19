@@ -5,6 +5,8 @@ import json
 import logging
 import re
 
+logger = logging.getLogger(__name__)
+
 WHITESPACE_RE = re.compile(r"[\s.\-:]+")
 INVALID_CHARS_RE = re.compile(r"[^a-zA-Z_0-9]")
 
@@ -106,24 +108,28 @@ def identifier(og: str) -> str:
 
     # remove ugly leading and trailing underscores, and convert to lowercase
     # (in most cases, this converts to snake case)
-    # any concerns with naming conflicts are solved at the end of the script, by appending a number
+    # any concerns with naming conflicts are solved at the end of the script, by
+    # appending a number
     iden = iden.strip("_").lower()
 
     if iden in KEYWORDS or iden in get_blocknames():
         iden += "_"
 
-    # any still invalid names can be solved by adding an underscore. e.g. '' -> '_', or '2swap' -> '_2swap'
+    # any still invalid names can be solved by adding an underscore. e.g. '' -> '_',
+    # or '2swap' -> '_2swap'
     if iden == "" or iden[0] in "0123456789":
         iden = "_" + iden
 
-    i = 2  # identifier_1 would be the original one, i.e. #1, so it doesnt need an index.
+    # identifier_1 would be the original one, i.e. #1, so it doesnt need an
+    # index.
+    i = 2
     new_iden = iden
     while new_iden in identifier_map.values():
         new_iden = f"{iden}{i}"
         i += 1
 
     identifier_map[og] = new_iden
-    logging.info(f"Mapped identifier {og!r} -> {new_iden!r}")
+    logger.info("Mapped identifier %s -> %s", repr(og), repr(new_iden))
 
     return new_iden
 
