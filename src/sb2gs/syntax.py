@@ -73,7 +73,6 @@ KEYWORDS = {
     "set_rotation_style_left_right",
     "set_rotation_style_all_around",
     "set_rotation_style_do_not_rotate",
-    "set_layer_order",
     "var",
 }
 identifier_map: dict[str, str] = {}
