@@ -1,0 +1,20 @@
+[package]
+name = "sb2gs-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "sb2gs command-line interface"
+
+[[bin]]
+name = "sb2gs"
+path = "src/main.rs"
+
+[dependencies]
+clap.workspace = true
+color-eyre.workspace = true
+colored.workspace = true
+eyre.workspace = true
+reqwest.workspace = true
+sb2gs-decompiler = { path = "../decompiler" }
+serde_json.workspace = true
+zip.workspace = true
