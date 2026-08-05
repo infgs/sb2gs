@@ -1,5 +1,6 @@
-target/
-crates/*/pkg/
+.ruff_cache/
+.venv/
+__pycache__/
 tests/*/
 playground/
 *.sb3
