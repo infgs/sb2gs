@@ -72,22 +72,31 @@
     devShells = forAllSystems (
       system: let
         pkgs = nixpkgs.legacyPackages.${system};
-        pythonSet = pythonSets.${system}.overrideScope editableOverlay;
+        pythonSet = pythonSets.${system};
+        pythonSetEditable = pythonSet.overrideScope editableOverlay;
       in {
         default = pkgs.mkShell {
           packages = [
-            (pythonSet.mkVirtualEnv "sb2gs-dev-env" workspace.deps.all)
+            (pythonSetEditable.mkVirtualEnv "sb2gs-dev-env" workspace.deps.all)
             pkgs.uv
             pkgs.git
           ];
           env = {
             UV_NO_SYNC = "1";
-            UV_PYTHON = pythonSet.python.interpreter;
+            UV_PYTHON = pythonSetEditable.python.interpreter;
             UV_PYTHON_DOWNLOADS = "never";
           };
           shellHook = ''
             unset PYTHONPATH
             export REPO_ROOT=$(git rev-parse --show-toplevel)
+          '';
+        };
+        demo = pkgs.mkShell {
+          packages = [
+            (pythonSet.mkVirtualEnv "sb2gs-env" workspace.deps.default)
+          ];
+          shellHook = ''
+            sb2gs --help
           '';
         };
       }
