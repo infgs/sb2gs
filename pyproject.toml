@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["hatchling", "editables"]
+requires = ["hatchling", "editables"] # editables needed for editable package on nixos
 build-backend = "hatchling.build"
 
 [project.scripts]

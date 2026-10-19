@@ -78,6 +78,7 @@
           packages = [
             (pythonSet.mkVirtualEnv "sb2gs-dev-env" workspace.deps.all)
             pkgs.uv
+            pkgs.git
           ];
           env = {
             UV_NO_SYNC = "1";
@@ -92,8 +93,17 @@
       }
     );
 
-    packages = forAllSystems (system: {
-      default = pythonSets.${system}.mkVirtualEnv "sb2gs-env" workspace.deps.default;
-    });
+    packages = forAllSystems (
+      system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+        inherit (pkgs.callPackages pyproject-nix.build.util {}) mkApplication;
+        pythonSet = pythonSets.${system};
+      in {
+        default = mkApplication {
+          venv = pythonSet.mkVirtualEnv "sb2gs-env" workspace.deps.default;
+          package = pythonSet.sb2gs;
+        };
+      }
+    );
   };
 }
