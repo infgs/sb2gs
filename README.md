@@ -11,10 +11,8 @@ Use [uv](https://docs.astral.sh/uv) to install sb2gs globally.
 uv tool install git+https://github.com/aspizu/sb2gs
 ```
 
-You can also use [nix flakes](https://wiki.nixos.org/wiki/Flakes) to install and
-develop sb2gs. The provided flake exports `packages.${system}.default` for
-installation, and provides a devShell (accessible in repo using `nix develop`)
-which builds an `editable` version of sb2gs.
+Or use [nix flakes](https://wiki.nixos.org/wiki/Flakes). This flake provides `packages.${system}.default`.
+You can also run `nix develop github:aspizu/sb2gs#demo` to temporarily install `sb2gs` in a nix shell.
 
 ### Usage
 
