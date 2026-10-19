@@ -53,7 +53,7 @@
           # NOTE: override SimpleWebSocketServer build system (this is a old package which scratchattach depends on. Scratchattach should probably migrate away from it)
           # see https://github.com/TimMcCool/scratchattach/issues/734
           simplewebsocketserver = prev.simplewebsocketserver.overrideAttrs (old: {
-            buildInputs = (old.buildInputs or []) ++ final.resolveBuildSystem {setuptools = [];};
+            nativeBuildInputs = (old.nativeBuildInputs or []) ++ final.resolveBuildSystem {setuptools = [];};
           });
         };
       in
